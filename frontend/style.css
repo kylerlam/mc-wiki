@@ -1,0 +1,37 @@
+/* select elements by Element */
+p {
+    font-style: italic;
+}
+h1 {
+    color: yellow;
+}
+
+/* select elements by Class */
+.bg_aqua{
+    background-color: aqua;
+}
+
+/* select elements by Element.Class */
+p.bg_blue{
+    background-color: blue;
+}
+p.red_text{
+    color: red;
+}
+
+/* group selectors */
+h2, h3{
+    font-size: 30px;
+    color: blueviolet;
+}
+
+/* global setting */
+* {
+    text-align: center;
+    color: blue;
+  }
+
+/* select element by id */
+#special_text{
+    color: violet;
+}
