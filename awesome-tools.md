@@ -10,4 +10,15 @@
 - Jupyter
 - zerotier/wireguard
 - snipaste
-- 
+- Blender
+- DiskGenius
+- VLC media player
+- advanced ip scanner
+- tinymediavault
+- raidrive
+- MobaXterm
+- Quicker
+- tailscale
+- zerotier/wireguard
+- rufus
+- ventoy
