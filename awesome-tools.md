@@ -1,0 +1,13 @@
+# Awesome Tools
+- obs
+- typora
+- Maccy
+- TrafficMonitorPlugins
+- localsend
+- nvm
+- Ventoy
+- wireguard-install
+- Jupyter
+- zerotier/wireguard
+- snipaste
+- 
