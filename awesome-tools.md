@@ -22,3 +22,4 @@
 - zerotier/wireguard
 - rufus
 - ventoy
+- finalshell
