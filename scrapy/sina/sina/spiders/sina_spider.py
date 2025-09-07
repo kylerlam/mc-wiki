@@ -25,7 +25,9 @@ class SinaSpider(scrapy.Spider):
             url = tag.get('href')
             yield scrapy.Request(url=url, callback=self.parse_details)
 
+    # *如果要一直爬而不局限于主页，需要改parse_details部分的代码, 先改名为parse_details_and_continue_crawling()
     def parse_details(self, response):
+        # 第一步 Parse Details:把每个连接的detail都弄出去
         soup = BeautifulSoup(response.body, "html.parser")
         # 得到标题
         try:
@@ -41,6 +43,7 @@ class SinaSpider(scrapy.Spider):
             yield item
         except Exception as e:
             self.logger.error(e)
+        # 第二步 Continue crawling 继续爬
 
     # 抓取标题
     def extract_title(self, soup):
