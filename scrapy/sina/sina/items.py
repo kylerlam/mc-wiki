@@ -7,6 +7,10 @@ import scrapy
 
 # 专门处理数据项
 class SinaItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+
+    # url of news page 对新闻进行标识
+    _id = scrapy.Field()
+
+    title = scrapy.Field()
+    # 还有其它选项继续加，例如    pub_date = scrapy.Field()
+
