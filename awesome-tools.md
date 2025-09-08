@@ -15,7 +15,7 @@
 - VLC media player
 - advanced ip scanner
 - tinymediavault
-- raidrive v2020.2.12
+- raidrive v2020.2.12 download:https://raidrive.en.uptodown.com/windows/versions
 - MobaXterm
 - Quicker
 - tailscale
