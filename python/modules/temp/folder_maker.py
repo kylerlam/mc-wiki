@@ -15,7 +15,7 @@ class FolderMaker:
         # to make mainfolder and subfolder
         elif os.path.isdir(folder_name) and subfolder_name is not None:
             # 子目录
-            # print(os.path.join(os.getcwd(),folder_name, subfolder_name))
+            # print(os.fs.join(os.getcwd(),folder_name, subfolder_name))
             try:
                 os.makedirs(os.path.join(os.getcwd(), folder_name, subfolder_name))
                 print(f"{folder_name}/{subfolder_name} created successfully!")

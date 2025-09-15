@@ -25,9 +25,9 @@ class FileMaker:
         else:
             pass
         path = os.path.join(os.getcwd(), filename)
-        # print(path)
+        # print(fs)
 
-        # | filename given | content given | path exists |
+        # | filename given | content given | fs exists |
         if filename != '' and content != '' and os.path.exists(path):
             message = f'The file {filename} already exists.'
         elif filename != '' and content == '' and os.path.exists(path):
