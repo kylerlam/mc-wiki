@@ -23,3 +23,5 @@
 - rufus
 - ventoy
 - finalshell
+- Crash Verge
+- 
