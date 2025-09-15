@@ -2,9 +2,8 @@ import os
 
 
 class FileDirectory():
-    def __init__(self, filename: str = None):
-        self.filename = filename
-
+    def __init__(self):
+        pass
     def get_currentdir(self):
         currentdir = os.getcwd()
         return currentdir
