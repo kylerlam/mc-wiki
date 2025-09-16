@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrome断点调试练习 - 爬虫模拟</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 30px;
+        }
+        .exercise {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #4b6cb7;
+        }
+        h2 {
+            color: #4b6cb7;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .instructions {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #4b6cb7;
+        }
+        .instructions p {
+            margin-bottom: 10px;
+        }
+        code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        .btn {
+            background-color: #4b6cb7;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        .btn:hover {
+            background-color: #3a5999;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        .result-area {
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            margin: 20px 0;
+            min-height: 100px;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .product {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            transition: transform 0.3s;
+        }
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .hint {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+        .code-snippet {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            line-height: 1.5;
+        }
+        .debug-steps {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .debug-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .step-number {
+            background: #4b6cb7;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+        .console {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .console-line {
+            margin-bottom: 5px;
+        }
+        .timestamp {
+            color: #a0aec0;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #6c757d;
+            margin-top: 30px;
+            border-top: 1px solid #e9ecef;
+        }
+        .exercise-nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .exercise-nav button {
+            margin: 5px;
+        }
+        @media (max-width: 768px) {
+            .product-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Chrome断点调试练习</h1>
+            <p class="subtitle">通过实际练习掌握Chrome开发者工具中的断点功能</p>
+        </header>
+
+        <div class="content">
+            <div class="exercise-nav">
+                <button class="btn" onclick="showExercise(1)">练习1</button>
+                <button class="btn" onclick="showExercise(2)">练习2</button>
+                <button class="btn" onclick="showExercise(3)">练习3</button>
+                <button class="btn" onclick="showExercise(4)">练习4</button>
+                <button class="btn" onclick="showExercise(5)">练习5</button>
+            </div>
+
+            <div class="exercise" id="exercise1">
+                <h2>练习1: 基础断点使用</h2>
+                <div class="instructions">
+                    <p><strong>目标:</strong> 学习如何设置和移除JavaScript断点</p>
+                    <p><strong>任务:</strong> 在下面的代码中找到<code>extractData</code>函数并设置断点，然后点击"开始提取"按钮</p>
+                    <div class="debug-steps">
+                        <div class="debug-step">
+                            <div class="step-number">1</div>
+                            <div>按F12打开开发者工具</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">2</div>
+                            <div>切换到"Sources"标签</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">3</div>
+                            <div>在左侧文件列表中找到当前HTML文件</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">4</div>
+                            <div>找到<code>extractData</code>函数并在行号上点击设置断点</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn" id="startExtract">开始提取</button>
+                <div class="result-area" id="exercise1Result"></div>
+                
+                <div class="hint">
+                    <p><strong>提示:</strong> 断点可以让代码在执行到特定行时暂停，方便你检查变量状态和调用堆栈。</p>
+                </div>
+                
+                <div class="code-snippet">
+                    // 这是extractData函数的代码位置<br>
+                    function extractData() {<br>
+                    &nbsp;&nbsp;// 在这里设置断点<br>
+                    &nbsp;&nbsp;const products = [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{id: 1, name: '产品A', price: 19.99},<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{id: 2, name: '产品B', price: 29.99},<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{id: 3, name: '产品C', price: 39.99}<br>
+                    &nbsp;&nbsp;];<br>
+                    <br>
+                    &nbsp;&nbsp;// 模拟一些数据处理<br>
+                    &nbsp;&nbsp;const processedData = products.map(p => {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;return {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id: p.id,<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name: p.name.toUpperCase(),<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;price: p.price * 0.9 // 应用10%折扣<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;};<br>
+                    &nbsp;&nbsp;});<br>
+                    <br>
+                    &nbsp;&nbsp;return processedData;<br>
+                    }
+                </div>
+            </div>
+
+            <div class="exercise" id="exercise2" style="display: none;">
+                <h2>练习2: DOM变化断点</h2>
+                <div class="instructions">
+                    <p><strong>目标:</strong> 学习如何设置DOM断点来监测元素变化</p>
+                    <p><strong>任务:</strong> 对下面的结果区域设置DOM子树修改断点，然后点击"加载产品"按钮</p>
+                    <div class="debug-steps">
+                        <div class="debug-step">
+                            <div class="step-number">1</div>
+                            <div>按F12打开开发者工具</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">2</div>
+                            <div>切换到"Elements"标签</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">3</div>
+                            <div>找到ID为"exercise2Result"的div元素</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">4</div>
+                            <div>右键点击该元素，选择"Break on" → "Subtree modifications"</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn" id="loadProducts">加载产品</button>
+                <div class="result-area" id="exercise2Result">
+                    <div class="product-list" id="productList"></div>
+                </div>
+                
+                <div class="hint">
+                    <p><strong>提示:</strong> DOM断点对于追踪动态内容加载非常有用，特别是在单页面应用中。</p>
+                </div>
+                
+                <div class="console">
+                    <div class="console-line"><span class="timestamp">[15:42:33]</span> 等待设置DOM断点...</div>
+                </div>
+            </div>
+
+            <div class="exercise" id="exercise3" style="display: none;">
+                <h2>练习3: 网络请求断点</h2>
+                <div class="instructions">
+                    <p><strong>目标:</strong> 学习如何设置XHR/Fetch断点来监测API请求</p>
+                    <p><strong>任务:</strong> 设置一个当URL包含"api"时的XHR断点，然后点击"获取用户数据"按钮</p>
+                    <div class="debug-steps">
+                        <div class="debug-step">
+                            <div class="step-number">1</div>
+                            <div>按F12打开开发者工具</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">2</div>
+                            <div>切换到"Sources"标签</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">3</div>
+                            <div>在右侧找到"XHR Breakpoints"面板</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">4</div>
+                            <div>点击"+"按钮，输入"api"，然后按回车</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn" id="fetchUserData">获取用户数据</button>
+                <div class="result-area" id="exercise3Result"></div>
+                
+                <div class="hint">
+                    <p><strong>提示:</strong> XHR断点可以帮助你分析网页与服务器之间的数据交换，对于理解API调用非常有用。</p>
+                </div>
+                
+                <div class="console">
+                    <div class="console-line"><span class="timestamp">[15:42:33]</span> 等待设置XHR断点...</div>
+                </div>
+            </div>
+
+            <div class="exercise" id="exercise4" style="display: none;">
+                <h2>练习4: 事件监听器断点</h2>
+                <div class="instructions">
+                    <p><strong>目标:</strong> 学习如何使用事件监听器断点</p>
+                    <p><strong>任务:</strong> 设置鼠标点击事件的事件监听器断点，然后点击"点击我"按钮</p>
+                    <div class="debug-steps">
+                        <div class="debug-step">
+                            <div class="step-number">1</div>
+                            <div>按F12打开开发者工具</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">2</div>
+                            <div>切换到"Sources"标签</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">3</div>
+                            <div>在右侧找到"Event Listener Breakpoints"面板</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">4</div>
+                            <div>展开"Mouse"类别，勾选"click"</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn" id="clickMeButton">点击我</button>
+                <div class="result-area" id="exercise4Result"></div>
+                
+                <div class="hint">
+                    <p><strong>提示:</strong> 事件监听器断点可以帮助你找到页面中处理特定事件的代码，无需事先知道代码位置。</p>
+                </div>
+                
+                <div class="console">
+                    <div class="console-line"><span class="timestamp">[15:42:33]</span> 等待设置事件监听器断点...</div>
+                </div>
+            </div>
+
+            <div class="exercise" id="exercise5" style="display: none;">
+                <h2>练习5: 综合场景 - 模拟爬虫</h2>
+                <div class="instructions">
+                    <p><strong>目标:</strong> 综合应用所有断点技巧分析一个复杂页面</p>
+                    <p><strong>任务:</strong> 使用各种断点技术分析下面的"电商网站"，找出价格数据是如何加载和渲染的</p>
+                    <div class="debug-steps">
+                        <div class="debug-step">
+                            <div class="step-number">1</div>
+                            <div>尝试使用JavaScript断点暂停数据加载过程</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">2</div>
+                            <div>使用DOM断点监测产品列表的变化</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">3</div>
+                            <div>设置XHR断点监测可能的API请求</div>
+                        </div>
+                        <div class="debug-step">
+                            <div class="step-number">4</div>
+                            <div>使用事件监听器断点分析按钮点击事件</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="mockEcommerceSite">
+                    <h3>模拟电商网站</h3>
+                    <button class="btn" id="loadProductCatalog">加载产品目录</button>
+                    <button class="btn" id="applyDiscount">应用折扣</button>
+                    <button class="btn" id="sortProducts">按价格排序</button>
+                    
+                    <div class="product-catalog" id="productCatalog">
+                        <p>产品将在这里显示...</p>
+                    </div>
+                    
+                    <div class="shopping-cart">
+                        <h4>购物车</h4>
+                        <ul id="cartItems"></ul>
+                        <p>总价: $<span id="totalPrice">0.00</span></p>
+                    </div>
+                </div>
+                
+                <div class="hint">
+                    <p><strong>提示:</strong> 尝试使用多种断点组合来全面了解数据流 - JavaScript断点、DOM断点、XHR断点和事件监听器断点。</p>
+                </div>
+                
+                <div class="console">
+                    <div class="console-line"><span class="timestamp">[15:42:33]</span> 等待调试操作...</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Chrome断点调试练习 &copy; 2023 - 用于教学和练习目的</p>
+        </footer>
+    </div>
+
+    <script>
+        // 显示指定练习，隐藏其他练习
+        function showExercise(num) {
+            for (let i = 1; i <= 5; i++) {
+                const exercise = document.getElementById(`exercise${i}`);
+                if (i === num) {
+                    exercise.style.display = 'block';
+                } else {
+                    exercise.style.display = 'none';
+                }
+            }
+        }
+
+        // 练习1: 基础断点
+        document.getElementById('startExtract').addEventListener('click', function() {
+            const resultArea = document.getElementById('exercise1Result');
+            resultArea.innerHTML = '<p>开始提取数据...</p>';
+            
+            // 模拟数据提取函数 - 在这里设置断点
+            setTimeout(() => {
+                const data = extractData();
+                resultArea.innerHTML = `<p class="success">数据提取完成: ${JSON.stringify(data)}</p>`;
+            }, 1000);
+        });
+
+        function extractData() {
+            // 这个函数是练习1的目标 - 在这里设置断点
+            const products = [
+                {id: 1, name: '产品A', price: 19.99},
+                {id: 2, name: '产品B', price: 29.99},
+                {id: 3, name: '产品C', price: 39.99}
+            ];
+            
+            // 模拟一些数据处理
+            const processedData = products.map(p => {
+                return {
+                    id: p.id,
+                    name: p.name.toUpperCase(),
+                    price: p.price * 0.9 // 应用10%折扣
+                };
+            });
+            
+            return processedData;
+        }
+
+        // 练习2: DOM变化断点
+        document.getElementById('loadProducts').addEventListener('click', function() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+            
+            // 模拟从服务器获取产品数据
+            setTimeout(() => {
+                const products = [
+                    {name: '笔记本电脑', price: 1299.99, category: '电子'},
+                    {name: '智能手机', price: 699.99, category: '电子'},
+                    {name: '书籍', price: 24.99, category: '文化'},
+                    {name: '耳机', price: 199.99, category: '电子'}
+                ];
+                
+                products.forEach(product => {
+                    const productElement = document.createElement('div');
+                    productElement.className = 'product';
+                    productElement.innerHTML = `
+                        <h4>${product.name}</h4>
+                        <p>价格: $${product.price.toFixed(2)}</p>
+                        <p>类别: ${product.category}</p>
+                    `;
+                    productList.appendChild(productElement);
+                });
+            }, 1500);
+        });
+
+        // 练习3: 网络请求断点
+        document.getElementById('fetchUserData').addEventListener('click', function() {
+            const resultArea = document.getElementById('exercise3Result');
+            resultArea.innerHTML = '<p>请求用户数据中...</p>';
+            
+            // 模拟API请求
+            fetchUserData()
+                .then(userData => {
+                    resultArea.innerHTML = `
+                        <p class="success">用户数据加载完成</p>
+                        <pre>${JSON.stringify(userData, null, 2)}</pre>
+                    `;
+                })
+                .catch(error => {
+                    resultArea.innerHTML = `<p class="error">错误: ${error.message}</p>`;
+                });
+        });
+
+        function fetchUserData() {
+            return new Promise((resolve) => {
+                // 模拟网络延迟
+                setTimeout(() => {
+                    resolve({
+                        id: 12345,
+                        name: '张三',
+                        email: 'zhangsan@example.com',
+                        membership: '黄金会员',
+                        lastLogin: '2023-04-15'
+                    });
+                }, 2000);
+            });
+        }
+
+        // 练习4: 事件监听器断点
+        document.getElementById('clickMeButton').addEventListener('click', function() {
+            const resultArea = document.getElementById('exercise4Result');
+            resultArea.innerHTML = '<p>按钮被点击了!</p>';
+            
+            // 模拟一些处理
+            setTimeout(() => {
+                resultArea.innerHTML += '<p>处理点击事件完成</p>';
+                
+                // 触发一些DOM变化
+                const newElement = document.createElement('div');
+                newElement.textContent = '动态添加的内容 ' + new Date().toLocaleTimeString();
+                resultArea.appendChild(newElement);
+            }, 1000);
+        });
+
+        // 练习5: 综合场景
+        document.getElementById('loadProductCatalog').addEventListener('click', function() {
+            const catalog = document.getElementById('productCatalog');
+            catalog.innerHTML = '<p>加载中...</p>';
+            
+            // 模拟API调用获取产品数据
+            setTimeout(() => {
+                const products = [
+                    {id: 101, name: '4K电视', price: 899.99, stock: 15},
+                    {id: 102, name: '游戏主机', price: 499.99, stock: 8},
+                    {id: 103, name: '蓝牙音箱', price: 129.99, stock: 20},
+                    {id: 104, name: '智能手表', price: 249.99, stock: 12}
+                ];
+                
+                renderProducts(products);
+            }, 2000);
+        });
+
+        document.getElementById('applyDiscount').addEventListener('click', function() {
+            // 应用10%折扣
+            const productElements = document.querySelectorAll('.product-item');
+            productElements.forEach(element => {
+                const priceElement = element.querySelector('.price');
+                const originalPrice = parseFloat(priceElement.dataset.originalPrice);
+                const discountedPrice = originalPrice * 0.9;
+                priceElement.textContent = `$${discountedPrice.toFixed(2)}`;
+            });
+            
+            document.querySelector('.product-catalog').innerHTML += 
+                '<p class="success">已应用10%折扣!</p>';
+        });
+
+        document.getElementById('sortProducts').addEventListener('click', function() {
+            const productContainer = document.getElementById('productCatalog');
+            const products = Array.from(productContainer.querySelectorAll('.product-item'));
+            
+            products.sort((a, b) => {
+                const priceA = parseFloat(a.querySelector('.price').dataset.originalPrice);
+                const priceB = parseFloat(b.querySelector('.price').dataset.originalPrice);
+                return priceA - priceB;
+            });
+            
+            // 清空并重新添加排序后的产品
+            productContainer.innerHTML = '';
+            products.forEach(product => productContainer.appendChild(product));
+            
+            productContainer.innerHTML += '<p class="success">产品已按价格排序!</p>';
+        });
+
+        function renderProducts(products) {
+            const catalog = document.getElementById('productCatalog');
+            catalog.innerHTML = '<h4>产品目录</h4>';
+            
+            products.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'product-item';
+                productElement.innerHTML = `
+                    <div>
+                        <h5>${product.name}</h5>
+                        <p class="price" data-original-price="${product.price}">$${product.price.toFixed(2)}</p>
+                        <p>库存: ${product.stock}件</p>
+                        <button class="add-to-cart" data-id="${product.id}" data-price="${product.price}">加入购物车</button>
+                    </div>
+                `;
+                catalog.appendChild(productElement);
+            });
+            
+            // 添加购物车事件监听
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.dataset.id;
+                    const productPrice = parseFloat(this.dataset.price);
+                    addToCart(productId, productPrice);
+                });
+            });
+        }
+
+        function addToCart(productId, price) {
+            const cartItems = document.getElementById('cartItems');
+            const totalPriceElement = document.getElementById('totalPrice');
+            
+            const newItem = document.createElement('li');
+            newItem.textContent = `产品 ${productId} - $${price.toFixed(2)}`;
+            cartItems.appendChild(newItem);
+            
+            // 更新总价
+            const currentTotal = parseFloat(totalPriceElement.textContent);
+            totalPriceElement.textContent = (currentTotal + price).toFixed(2);
+        }
+    </script>
+</body>
+</html>
