@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+
+// @SpringBootApplication 通常只有一个
 @SpringBootApplication
 public class Application {
 
@@ -17,7 +19,7 @@ public class Application {
 
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-        return args -> {
+        return _ -> {
 
             System.out.println("Let's inspect the beans provided by Spring Boot:");
 
@@ -30,4 +32,6 @@ public class Application {
         };
     }
 
+    public record Greeting(long id, String content) {
+    }
 }
