@@ -1,26 +1,15 @@
 import { useNavigate } from "react-router-dom";
+import useGoTo from "./useGoTo";
 
 export default function Index() {
-  const navigate = useNavigate();
+  const goTo = useGoTo()
 
-  const goToLoginPage = () =>{
-    navigate('/login')
-  }
-
-  const goToHomePage = () =>{
-    navigate('/home')
-  }
-
-  const goToRegisterPage = () =>{
-    navigate('/register')
-  }
-  
   return (
     <>
     <h1>我是index page</h1><br />
-    <button type="button" onClick={goToLoginPage}>go to Login</button><br />
-    <button type="button" onClick={goToHomePage}>go to Home</button><br />
-    <button type="button" onClick={goToRegisterPage}>go to register</button>
+    <button type="button" onClick={() => goTo('/login')}>go to Login</button><br />
+    <button type="button" onClick={() => goTo('/home')}>go to Home</button><br />
+    <button type="button" onClick={() => goTo('/register')}>go to register</button>
     </>
   );
 }

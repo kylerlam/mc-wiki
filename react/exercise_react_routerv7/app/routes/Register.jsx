@@ -1,11 +1,9 @@
 import { useNavigate } from "react-router"
-
+import useGoTo from "./useGoTo"
 
 export default function Register(){
-    const navigate = useNavigate()
-    function goToIndexPage(){
-        navigate("/")
-    }
+    const goTo = useGoTo()
+
     return(
         <>
         <h1>Wellcome to register page</h1>
@@ -13,7 +11,8 @@ export default function Register(){
         <input type="password" placeholder="enter password"/>
         <input type="password" placeholder="enter password"/><br />
         <button type="button">Confirm</button><br /><br />
-        <button type="button" onClick={goToIndexPage}>Go to Index Page</button><br />
+        <button type="button" onClick={ () => goTo('/login') }>Go to Login Page</button><br />
+        <button type="button" onClick={ () => goTo('/') }>Go to Index Page</button><br />
         </>
     )
 }

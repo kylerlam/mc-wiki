@@ -1,15 +1,12 @@
-import { useNavigate } from "react-router"
+import useGoTo from "./useGoTo"
 
 export default function Home(){
-    const navigate = useNavigate()
-    const goToIndexPage = () => {
-        navigate('/')
-    }
+    const goTo = useGoTo()
 
     return (
         <>
         <div>Hey, welcome to the Home page!</div><br />
-        <button type="button" onClick={goToIndexPage}>back to index page</button>
+        <button type="button" onClick={ () => goTo('/')}>back to index page</button>
         </>
 
     )
