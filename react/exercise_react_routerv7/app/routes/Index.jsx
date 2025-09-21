@@ -10,11 +10,17 @@ export default function Index() {
   const goToHomePage = () =>{
     navigate('/home')
   }
+
+  const goToRegisterPage = () =>{
+    navigate('/register')
+  }
   
   return (
     <>
-    <button type="button" onClick={goToLoginPage}>Login</button><br />
-    <button type="button" onClick={goToHomePage}>Home</button>
+    <h1>我是index page</h1><br />
+    <button type="button" onClick={goToLoginPage}>go to Login</button><br />
+    <button type="button" onClick={goToHomePage}>go to Home</button><br />
+    <button type="button" onClick={goToRegisterPage}>go to register</button>
     </>
   );
 }

@@ -12,7 +12,7 @@ export default function Register(){
         <input type="text" placeholder="enter password"/>
         <input type="password" placeholder="enter password"/>
         <input type="password" placeholder="enter password"/><br />
-        <button type="button">Confirm</button><br />
+        <button type="button">Confirm</button><br /><br />
         <button type="button" onClick={goToIndexPage}>Go to Index Page</button><br />
         </>
     )
