@@ -117,3 +117,21 @@ import Profile from "./Profile";
 
 ---
 
+## 路由 - React Router
+
+react-router v6 适合小项目; v7适合大项目
+
+``````
+// 安装 react-router v6版本
+npm install react-router-dom
+``````
+
+``````
+// 程序入口 main.jsx 使用 <BrowserRouter>
+<BrowserRouter>
+  <App />
+</BrowserRouter>
+``````
+
+
+

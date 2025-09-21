@@ -30,7 +30,7 @@ const data = [
   },
 ];
 
-function Profile() {
+export function Profile() {
   return (
     <img
       src="https://source.boomplaymusic.com/group10/M00/11/08/f29fcf61d01e48a2a9943db3bf57d7f6H3000W3000_464_464.jpg"
@@ -40,7 +40,7 @@ function Profile() {
   );
 }
 
-function Message() {
+export function Message() {
   // 直接返回表格组件，不需要额外定义App函数
   return (
     <Table dataSource={data}>
