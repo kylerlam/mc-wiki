@@ -115,6 +115,39 @@ export default function Profile(){
 import Profile from "./Profile"; 
 ```
 
+**箭头函数**
+
+// 普通函数 vs 箭头函数
+
+```react
+import { useNavigate } from "react-router";
+
+export default function useGoTo() {
+  const navigate = useNavigate();
+
+  // 普通函数写法
+  function goTo(path) {
+    navigate(path);
+  }
+
+  return goTo;
+}
+```
+
+```react
+import { useNavigate } from "react-router";
+
+export default function useGoTo() {
+    const navigate = useNavigate();
+    // 箭头函数
+	return (path) => navigate(path);	
+}
+```
+
+
+
+
+
 ---
 
 ## JSX - markup language
