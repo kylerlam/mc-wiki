@@ -9,4 +9,5 @@ export default [
     route("/home", "./routes/Home.jsx"),
     route("/login", "./routes/Login.jsx"),
     route("/register", "./routes/register.jsx"),
+    route("/tdlist", "./routes/using_curly_bracket_in_jsx/show_name_tdolist.jsx"),
 ] satisfies RouteConfig;

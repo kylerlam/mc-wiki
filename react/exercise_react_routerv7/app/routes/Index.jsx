@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+
 import useGoTo from "./useGoTo";
 
 export default function Index() {
@@ -9,7 +9,8 @@ export default function Index() {
     <h1>我是index page</h1><br />
     <button type="button" onClick={() => goTo('/login')}>go to Login</button><br />
     <button type="button" onClick={() => goTo('/home')}>go to Home</button><br />
-    <button type="button" onClick={() => goTo('/register')}>go to register</button>
+    <button type="button" onClick={() => goTo('/register')}>go to register</button><br />
+    <button type="button" onClick={() => goTo('/tdlist')}>go to To Do List Page</button>
     </>
   );
 }

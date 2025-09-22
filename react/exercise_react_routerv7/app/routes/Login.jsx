@@ -9,5 +9,5 @@ export default function Login() {
         <button type="button" >Confirm</button><br /><br />
         <button type="button" onClick={ () => goTo('/register') }>go to sign up!!!</button><br />
         <button type="button" onClick={ () => goTo('/') }>back to index</button>
-        </>
+        </> 
 }
