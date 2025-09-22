@@ -2,7 +2,7 @@
 
 ## 你的第一个组件
 
-### `<></>` - 语法转换 converter
+### `<></>` - Fragment 语法转换 (也称转化器 converter)
 
 把HTML 片段转成JSX
 
@@ -117,6 +117,96 @@ import Profile from "./Profile";
 
 ---
 
+## JSX - markup language
+
+**规则**
+
+1. 只能返回一个根元素 
+
+```react
+// 必须用 <div></div> 或 <></> 包裹
+<div>
+  <h1>海蒂·拉玛的待办事项</h1>
+  <img 
+    src="https://i.imgur.com/yXOvdOSs.jpg" 
+    alt="Hedy Lamarr" 
+    class="photo"
+  >
+  <ul>
+    ...
+  </ul>
+</div>
+```
+
+2. 标签必须闭合 例: `<img />`
+3. 驼峰式命名法 Camel case = DOM 属性中的命名
+
+```react
+<img 
+  src="https://i.imgur.com/yXOvdOSs.jpg" 
+  alt="Hedy Lamarr" 
+  className="photo"
+/>
+```
+
+4. 转化器 - 将现有的 HTML 转化成 JSX
+5. JSX 注释符号是 { /* ... */ }
+6. JSX 内嵌到 JavaScript中 (传递变量, 函数和对象)
+
+```react
+
+export default function Avator(){
+    return (
+    	<img
+            className="avatar"
+            // src 和 alt 被作为字符串传递
+            src="https://i.imgur.com/7vQD0fPs.jpg"
+            alt="Gregorio Y. Zara"
+    )
+}
+            
+// 用 {} 动态显示数据:
+            export default function Avator(){
+    return (
+    	<img
+            className="avatar"
+            // src 和 alt 被作为字符串传递
+            // 动态去读取 JavaScript 中avatar这个变量的值
+			src={avatar}
+			alt={description}     
+    )
+}
+```
+
+另一个示例:
+
+```react
+// JSX 标签内的文本中使用 {}, 但是 <{tag}> 中是无效的
+// 可传递数据类型有: 字符串, 数字其它JavaScript 表达式
+export default function TodoList() {
+  const name = 'Gregorio Y. Zara';
+  return (
+    <h1>{name}的待办事项列表</h1>
+  );
+}
+// 传递对象
+// 对象本身带{} + 传递需要加 {} = 双括号 {{}}
+export default function TodoList() {
+  return (
+    <ul style={{
+      backgroundColor: 'black',
+      color: 'pink'
+    }}>
+      <li>Improve the videophone</li>
+      <li>Prepare aeronautics lectures</li>
+      <li>Work on the alcohol-fuelled engine</li>
+    </ul>
+  );
+}
+```
+
+---
+
 ## 路由 - React Router
 
 react-router v7 适合小项目; v7适合大项目
@@ -124,13 +214,6 @@ react-router v7 适合小项目; v7适合大项目
 ``````
 // 安装 React Router v7 版本
 npx create-react-router@latest my-react-router-app
-``````
-
-``````
-// 程序入口 main.jsx 使用 <BrowserRouter>
-<BrowserRouter>
-  <App />
-</BrowserRouter>
 ``````
 
 
