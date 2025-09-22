@@ -253,3 +253,56 @@ npx create-react-router@latest my-react-router-app
 
 - 可传递对象、数组和函数
 - 数据**双向绑定**
+
+### 展开语法
+
+```react
+// 一些组件将它们所有的 props 转发给子组件
+// 父组件
+function Profile({ person, size, isSepia, thickBorder }) {
+  return (
+    <div className="card">
+      // 子组件
+      <Avatar
+        person={person}
+        size={size}
+        isSepia={isSepia}
+        thickBorder={thickBorder}
+      />
+    </div>
+  );
+}
+```
+
+### 懒人语法 - 最简洁
+
+```react
+// 这会将 Profile 的所有 props 转发到 Avatar，而不列出每个名字。
+function Profile(props) {
+  return (
+    <div className="card">
+      <Avatar {...props} />
+    </div>
+  );
+}
+```
+
+---
+
+### 将 JSX 作为子组件传递
+
+```react
+// 嵌套浏览器内置标签是很常见的
+<div>
+  <img />
+</div>
+```
+
+```react
+// 嵌套自己的组件 
+<Card>
+  // children prop
+  <Avatar />
+</Card>
+```
+

@@ -25,4 +25,8 @@ export default [
     "/access_avatar",
     "./routes/send_value_via_props_between_components/Props_Avatar.jsx",
   ),
+  route(
+    "/clock",
+    "./routes/send_value_via_props_between_components/Props_Clock.jsx",
+  ),
 ] satisfies RouteConfig;
