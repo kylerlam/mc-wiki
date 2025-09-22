@@ -21,4 +21,8 @@ export default [
     "/all_in_one_obj",
     "./routes/using_curly_bracket_in_jsx/all_in_one_object.jsx",
   ),
+  route(
+    "/access_avatar",
+    "./routes/send_value_via_props_between_components/Props_Avatar.jsx",
+  ),
 ] satisfies RouteConfig;

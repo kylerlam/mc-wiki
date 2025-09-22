@@ -37,6 +37,11 @@ export default function Index() {
         go to All-In-One Object Page
       </button>
       <br />
+      <hr />
+      <button type="button" onClick={() => goTo("/access_avatar")}>
+        go to Avatar Page
+      </button>
+      <br />
     </>
   );
 }

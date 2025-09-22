@@ -249,5 +249,7 @@ react-router v7 适合小项目; v7适合大项目
 npx create-react-router@latest my-react-router-app
 ``````
 
+## Props - 属性 允许组件之间的通信
 
-
+- 可传递对象、数组和函数
+- 数据**双向绑定**
