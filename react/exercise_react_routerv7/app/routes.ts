@@ -37,4 +37,12 @@ export default [
     "/props_my_version_1",
     "./routes/send_value_via_props_between_components/challenge_1/My_Version.jsx",
   ),
+  route(
+    "/props_challenge_2",
+    "./routes/send_value_via_props_between_components/challenge_2/App.jsx",
+  ),
+  route(
+    "/props_my_version_2",
+    "./routes/send_value_via_props_between_components/challenge_2/My_Version.jsx",
+  ),
 ] satisfies RouteConfig;
