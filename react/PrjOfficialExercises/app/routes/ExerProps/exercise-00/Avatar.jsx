@@ -1,5 +1,5 @@
 import { getImageUrl } from "./utils";
-import useGoTo from "../useGoTo";
+import useGoTo from "../../Common/useGoTo";
 
 function Avatar({ person, size }) {
   return (

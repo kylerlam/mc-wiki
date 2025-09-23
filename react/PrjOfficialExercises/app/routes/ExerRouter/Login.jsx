@@ -1,4 +1,4 @@
-import useGoTo from "./useGoTo";
+import useGoTo from "../Common/useGoTo";
 
 export default function Login() {
   const goTo = useGoTo();

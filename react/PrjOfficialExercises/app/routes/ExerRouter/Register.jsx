@@ -1,5 +1,4 @@
-import { useNavigate } from "react-router";
-import useGoTo from "./useGoTo";
+import useGoTo from "../Common/useGoTo";
 
 export default function Register() {
   const goTo = useGoTo();
