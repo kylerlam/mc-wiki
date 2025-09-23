@@ -287,6 +287,24 @@ function Profile(props) {
 }
 ```
 
+数据流
+
+```react
+function Card({children, title}){
+    ...
+}
+
+export default function Profile(){
+    // title="..."是一个 普通的 prop
+    <Card title="..."></Card>
+    <Card>(会被自动收集到 props.children 里)</Card>
+}
+    // 每次调用 <Card>，React 会生成一个对象,传到子组件去
+    // {children} 是个占位符
+```
+
+
+
 ---
 
 ### 将 JSX 作为子组件传递
