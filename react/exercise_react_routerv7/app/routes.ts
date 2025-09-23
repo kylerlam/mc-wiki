@@ -29,4 +29,12 @@ export default [
     "/clock",
     "./routes/send_value_via_props_between_components/Props_Clock.jsx",
   ),
+  route(
+    "/props_challenge_1",
+    "./routes/send_value_via_props_between_components/challenge_1/App.jsx",
+  ),
+  route(
+    "/props_my_version_1",
+    "./routes/send_value_via_props_between_components/challenge_1/My_Version.jsx",
+  ),
 ] satisfies RouteConfig;
