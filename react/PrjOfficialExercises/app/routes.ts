@@ -17,4 +17,5 @@ export default [
   route("/exer-02-attempt", "./routes/ExerProps/exercise-02/Attempt.jsx"),
   route("/exer-03-app", "./routes/ExerProps/exercise-03/App.jsx"),
   route("/exer-03-attempt", "./routes/ExerProps/exercise-03/Attempt.jsx"),
+  route("/wks-compound-interest", "./routes/WksCompoundInterest/App.jsx"),
 ] satisfies RouteConfig;
