@@ -287,7 +287,7 @@ function Profile(props) {
 }
 ```
 
-数据流
+数据流向
 
 ```react
 function Card({children, title}){
@@ -296,11 +296,15 @@ function Card({children, title}){
 
 export default function Profile(){
     // title="..."是一个 普通的 prop
+	// 不用标签放 Card 里面
     <Card title="..."></Card>
+    
+    // 要用标签(eg.<h1></h1>)放Card中间
     <Card>(会被自动收集到 props.children 里)</Card>
 }
     // 每次调用 <Card>，React 会生成一个对象,传到子组件去
     // {children} 是个占位符
+
 ```
 
 
