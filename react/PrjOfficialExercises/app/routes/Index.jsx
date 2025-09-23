@@ -21,24 +21,24 @@ export default function Index() {
       </button>
       <br />
       <hr />
-      <button type="button" onClick={() => goTo("/name_tdlist")}>
+      <button type="button" onClick={() => goTo("/name-tdlist")}>
         go to Name To Do List Page
       </button>
       <br />
-      <button type="button" onClick={() => goTo("/date_tdlist")}>
+      <button type="button" onClick={() => goTo("/date-tdlist")}>
         go to Date To Do List Page
       </button>
       <br />
-      <button type="button" onClick={() => goTo("/object_deliver")}>
-        go to object_deliver Page
+      <button type="button" onClick={() => goTo("/object-deliver")}>
+        go to object-deliver Page
       </button>
       <br />
-      <button type="button" onClick={() => goTo("/all_in_one_obj")}>
+      <button type="button" onClick={() => goTo("/all-in-one-obj")}>
         go to All-In-One Object Page
       </button>
       <br />
       <hr />
-      <button type="button" onClick={() => goTo("/access_avatar")}>
+      <button type="button" onClick={() => goTo("/access-avatar")}>
         go to Avatar Page
       </button>
       <br />
