@@ -1,4 +1,4 @@
-import useFormula from "./Formula";
+import { useFormula } from "./Formula";
 import { useState } from "react";
 
 function Calculater({ enter }) {
