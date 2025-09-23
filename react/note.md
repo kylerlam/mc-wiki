@@ -307,6 +307,40 @@ export default function Profile(){
 
 ```
 
+---
+
+### props.children
+
+```react
+// App.jsx
+function Box({ children }) {
+  return <div className="box">{children}</div>;
+}
+
+export default function App() {
+  return (
+    <Box>
+      <p>Hello World!</p>
+      <button>Click me</button>
+    </Box>
+  );
+}
+```
+
+```react
+// 最后渲染出来是这样:
+<div class="box">
+  <p>Hello World!</p>
+  <button>Click me</button>
+</div>
+
+// 可以给 props.children 起别名
+function Box(props) {
+  const content = props.children; // 起别名
+  return <div>{content}</div>;
+}
+```
+
 
 
 ---
