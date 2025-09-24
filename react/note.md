@@ -406,7 +406,7 @@ if (isPacked){
 
 `map`:  遍历
 
-`filter`: 过滤条件
+`filter`: 是 JavaScript 中数组的**过滤器**
 
 ### 数据类型
 
