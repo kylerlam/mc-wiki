@@ -28,4 +28,7 @@ export default [
   route("/exer-render-03-app2", "./routes/ExerRender/exercise-03/App2.jsx"),
   route("/exer-render-03-try2", "./routes/ExerRender/exercise-03/Attempt2.jsx"),
   route("/exer-render-04-app", "./routes/ExerRender/exercise-04/App.jsx"),
+  route("/exer-render-05-app", "./routes/ExerRender/exercise-05/App.jsx"),
+  route("/exer-render-06-app", "./routes/ExerRender/exercise-06/App.jsx"),
+  route("/exer-render-07-app", "./routes/ExerRender/exercise-07/App.jsx"),
 ] satisfies RouteConfig;
