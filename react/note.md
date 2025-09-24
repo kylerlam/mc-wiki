@@ -341,10 +341,6 @@ function Box(props) {
 }
 ```
 
-
-
----
-
 ### 将 JSX 作为子组件传递
 
 ```react
@@ -362,3 +358,46 @@ function Box(props) {
 </Card>
 ```
 
+---
+
+## 渲染 Rendering
+
+三元运算符: 
+
+```react
+// 源代码
+if (isPacked) {
+  return <li className="item">{name} ✅</li>;
+}
+return <li className="item">{name}</li>;
+
+// 三元运算表达
+if (isPacked){
+    return 
+    <li className="item">
+        {isPacked ? name + " ✅" : name}
+    </li>;
+}
+```
+
+### HTML 标签
+
+`<del></del>`: 删除线
+
+`<i></i>`: 斜体
+
+```react
+// dl: Definition List
+// dt: Definition Term
+// dd: Definition Description
+<dl>
+  <dt>术语1</dt>
+  <dd>术语1的解释</dd>
+  <dt>术语2</dt>
+  <dd>术语2的解释</dd>
+</dl>
+```
+
+### 运算符
+
+`&&`:  AND 表达式
