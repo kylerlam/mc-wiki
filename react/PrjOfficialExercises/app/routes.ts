@@ -18,4 +18,13 @@ export default [
   route("/exer-03-app", "./routes/ExerProps/exercise-03/App.jsx"),
   route("/exer-03-attempt", "./routes/ExerProps/exercise-03/Attempt.jsx"),
   route("/wks-compound-interest", "./routes/WksCompoundInterest/App.jsx"),
+  route("/exer-00-app", "./routes/Exerrender/exercise-00/App.jsx"),
+  route("/exer-render-01-try", "./routes/ExerRender/exercise-01/Attempt.jsx"),
+  route("/exer-render-01-app", "./routes/ExerRender/exercise-01/App.jsx"),
+  route("/exer-render-02-app", "./routes/ExerRender/exercise-02/App.jsx"),
+  route("/exer-render-02-try", "./routes/ExerRender/exercise-02/Attempt.jsx"),
+  route("/exer-render-03-app", "./routes/ExerRender/exercise-03/App.jsx"),
+  route("/exer-render-03-try", "./routes/ExerRender/exercise-03/Attempt.jsx"),
+  route("/exer-render-03-app2", "./routes/ExerRender/exercise-03/App2.jsx"),
+  route("/exer-render-03-try2", "./routes/ExerRender/exercise-03/Attempt2.jsx"),
 ] satisfies RouteConfig;
