@@ -1,6 +1,6 @@
 # Notes
 
-- OSI 七层模型（从底到顶）
+## OSI 七层模型（从底到顶）
 
 1. 物理层
 2. 数据链路层
@@ -41,3 +41,74 @@ stream{
 ## 反向代理 - Reverse Proxy
 
 - 在第七层的 HTTP 层
+
+### 子域名 转发
+
+```linux
+# nginx.conf
+http {
+    server {
+        listen 80;
+        server_name nas.monster.com; # 只处理访问这个地址的请求
+
+        location / {
+            proxy_pass http://100.99.128.22:5000; # 传给目标主机
+        }
+    }
+}
+```
+
+### 路径 转发🚀🚀🚀
+
+```linux
+http {
+    server {
+        listen 80;
+        server_name monster.com;
+
+        # =========== NAS ===========
+        location /nas/ {
+            proxy_pass http://100.99.128.22:5000/;
+            
+			proxy_set_header Host $host;               # 把用户请求的 Host 传递给后端
+			proxy_set_header X-Real-IP $remote_addr;   # 客户端真实 IP
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; # 转发链路里的 IP
+			proxy_set_header X-Forwarded-Proto $scheme; # http/https 协议
+			proxy_request_buffering off;   # 上传文件时，不缓存到临时文件，直接转发
+			proxy_buffering off;           # 下载时，直接转发，不做缓冲
+        }
+
+        location /nas/movie/ {
+            proxy_pass http://100.99.128.22:32400/;   # Plex
+        }
+
+        location /nas/music/ {
+            proxy_pass http://100.99.128.22:6600/;    # 音乐服务
+        }
+
+        # =========== 软路由 (lede) ===========
+        location /lede/ {
+            proxy_pass http://100.99.128.33:80/;      # 软路由管理界面
+            
+            proxy_set_header Host $host;
+    		proxy_set_header X-Real-IP $remote_addr;
+    		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    		proxy_set_header X-Forwarded-Proto $scheme;
+        }
+
+        location /lede/webdav/ {
+            proxy_pass http://100.99.128.44:8080/;    # WebDAV 服务
+        }
+
+        location /lede/plex/ {
+            proxy_pass http://100.99.128.22:32400/;   # Plex 也可以从这里走
+        }
+
+        location /lede/pve/ {
+            proxy_pass http://100.99.128.55:8006/;    # Proxmox VE 管理界面
+        }
+    }
+}
+
+```
+
