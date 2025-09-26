@@ -120,7 +120,7 @@ acme.sh - 生成证书 + 自动续签 的工具
 
 ```linux
 # 安装 acme.sh
-curl https://get.acme.sh | sh -s email=my@example.com
+curl https://get.acme.sh | sh -s email=<my@example.com>
 
 # 让当前这个 shell 立刻读取刚被安装脚本写入 
 source ~/.bashrc 2>/dev/null || true
