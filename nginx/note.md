@@ -112,3 +112,28 @@ http {
 
 ```
 
+## 受信任证书申请 + 自动续签
+
+acme.sh - 生成证书 + 自动续签 的工具
+
+### 步骤:
+
+```linux
+# 安装 acme.sh
+curl https://get.acme.sh | sh -s email=my@example.com
+
+# 让当前这个 shell 立刻读取刚被安装脚本写入 
+source ~/.bashrc 2>/dev/null || true
+
+# 修改默认 CA
+# acme.sh 脚本默认 CA 服务器是 ZeroSSL 只需要把 CA 服务器改成 Let's Encrypt 即可
+acme.sh --set-default-ca --server letsencrypt
+
+# 用 cloudflare 自动验证（DNS API）
+# 给单域名使用
+# export CF_Token="<Zone-ID>"
+# export CF_Account_ID="<Acount-ID>"
+
+# 签发通配符证书
+./acme.sh --issue --dns dns_cf -d example.com -d '*.example.com'
+```
