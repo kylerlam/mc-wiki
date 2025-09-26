@@ -135,5 +135,5 @@ acme.sh --set-default-ca --server letsencrypt
 # export CF_Account_ID="<Acount-ID>"
 
 # 签发通配符证书
-./acme.sh --issue --dns dns_cf -d example.com -d '*.example.com'
+./acme.sh --issue --dns dns_cf -d <example.com> -d '*.<example.com>'
 ```
