@@ -137,3 +137,37 @@ acme.sh --set-default-ca --server letsencrypt
 # 签发通配符证书
 ./acme.sh --issue --dns dns_cf -d <example.com> -d '*.<example.com>'
 ```
+
+## Nginx 备份与迁移
+
+主要备份的配置文件:
+
+```linux
+# 主配置
+/etc/nginx/nginx.conf
+# 全局配置片段（可能有自定义）
+/etc/nginx/conf.d/
+# 各站点配置
+/etc/nginx/site-available/
+/etc/nginx/sites-enabled/
+其他辅助配置
+/etc/nginx/snippets/
+/etc/nginx/proxy_params
+```
+
+```linux
+# 打包 Nginx 配置
+sudo tar -czvf nginx-config-backup.tar.gz /etc/nginx
+
+# （可选）打包 Let’s Encrypt 证书
+sudo tar -czvf letsencrypt-backup.tar.gz /etc/letsencrypt
+
+# （可选）打包 acme.sh 数据
+sudo tar -czvf acme-sh-backup.tar.gz ~/.acme.sh
+```
+
+把这些文件拷贝到新服务器，在 `/etc/` 下解压，跑一遍 `nginx -t` 测试，然后启动服务。
+
+普通个人用户：新服务器直接重装 acme.sh → 重新申请证书，更推荐。
+
+谨慎/企业用户：把 `~/.acme.sh` 也打包走，保证完全无损迁移。
