@@ -112,6 +112,20 @@ http {
 
 ```
 
+### 目标机器后端写死了绝对路径
+
+```linux
+# 可选：后端页面里若写死了绝对地址（e.g. mc-kyler.space/v/...）
+# 需要 nginx 编译了 sub_filter 模块才可以用
+sub_filter_once off;
+sub_filter "http://100.99.128.22:5666" "https://mc-kyler.space";
+sub_filter "https://100.99.128.22:5666" "https://mc-kyler.space";
+```
+
+
+
+---
+
 ## 受信任证书申请 + 自动续签
 
 acme.sh - 生成证书 + 自动续签 的工具
